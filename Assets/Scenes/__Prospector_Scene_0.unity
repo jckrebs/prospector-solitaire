@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 827460510}
   - component: {fileID: 827460509}
   - component: {fileID: 827460511}
+  - component: {fileID: 827460514}
   m_Layer: 0
   m_Name: _MainCamera
   m_TagString: MainCamera
@@ -232,3 +233,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827460514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827460508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b73d5a4ca574fc8a2a374efddd3f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardSprites: {fileID: 11400000, guid: 4efb9f8bd92a441ae886afedefff8795, type: 2}
+  prefabCard: {fileID: 5373786208327396017, guid: e22a1c4424f1f4747975d2a2d7eb79ac, type: 3}
+  prefabSprite: {fileID: 1000014090761352, guid: 30a6ba41f0d264815a76b64a60ee0b62, type: 3}
+  startFaceUp: 1
+  deckAnchor: {fileID: 0}
+  cards: []
