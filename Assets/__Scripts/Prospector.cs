@@ -226,6 +226,53 @@ public class Prospector : MonoBehaviour
     }
 
     /// <summary>
+    /// Test whether the game is over
+    /// </summary>
+    void CheckForGameOver()
+    {
+        // If the mine is empty, the game is over
+        if (mine.Count == 0)
+        {
+            GameOver(true); // Call GameOver() with a win
+            return;
+        }
+
+        // If there are still cards in the mine & draw pile, the game's not over
+        if (drawPile.Count > 0) return;
+
+        // Check for remaining valid plays
+        foreach (CardProspector cp in mine)
+        {
+            // If there is a valid play, the game's not over
+            if (target.AdjacentTo(cp)) return;
+        }
+
+        // Since there are no valid plays, the game is over
+        GameOver(false); // Call GameOver with a loss
+    }
+
+    /// <summary>
+    /// Called when the game is over. Simple for now, but expandable
+    /// </summary>
+    /// <param name="won">true if the player won</param>
+    void GameOver(bool won)
+    {
+        if (won)
+        {
+            ScoreManager.TALLY(eScoreEvent.gameWin);
+        }
+        else
+        {
+            ScoreManager.TALLY(eScoreEvent.gameLoss);
+        }
+
+        // Reset the CardSpritesSO singleton to null
+        CardSpritesSO.RESET();
+        // Reload the scene, resetting the game
+        SceneManager.LoadScene("__Prospector_Scene_0");
+    }
+
+    /// <summary>
     /// Handler for any time a card in the game is clicked
     /// </summary>
     /// <param name="cp">The CardProspector that was clicked</param>
@@ -242,6 +289,7 @@ public class Prospector : MonoBehaviour
                 // Call two methods on the Prospector Singleton S
                 S.MoveToTarget(S.Draw()); // Draw a new target card
                 S.UpdateDrawPile(); // Restack the drawPile
+                ScoreManager.TALLY(eScoreEvent.draw);
                 break;
             case eCardState.mine:
                 // Clicking a card in the mine will check if it's a valid play
@@ -259,8 +307,11 @@ public class Prospector : MonoBehaviour
                     S.MoveToTarget(cp); // Make it the target card
 
                     S.SetMineFaceUps();
+                    ScoreManager.TALLY(eScoreEvent.mine);
                 }
                 break;
         }
+
+        S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()
     }
 }
