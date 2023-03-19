@@ -9,6 +9,9 @@ public class Prospector : MonoBehaviour
 {
     private static Prospector S; // A private Singleton for Prospector
 
+    [Header("Inscribed")]
+    public float roundDelay = 2f; // 2 sec delay between rounds
+
     [Header("Dynamic")]
     public List<CardProspector> drawPile;
     public List<CardProspector> discardPile;
@@ -269,6 +272,16 @@ public class Prospector : MonoBehaviour
         // Reset the CardSpritesSO singleton to null
         CardSpritesSO.RESET();
         // Reload the scene, resetting the game
+        // Bust wait a moment first, giving the final score a moment to travel
+        Invoke("ReloadLevel", roundDelay);
+        //SceneManager.LoadScene("__Prospector_Scene_0");
+
+        UITextManager.GAME_OVER_UI(won);
+    }
+
+    void ReloadLevel()
+    {
+        // Reload the scen, resetting the game
         SceneManager.LoadScene("__Prospector_Scene_0");
     }
 
